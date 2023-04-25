@@ -21,8 +21,9 @@ Route::group([ "middleware" => "auth:sanctum"], function () {
     });
 });
 
-Route::get("/index", function (Request $request) {
+Route::get("/", function (Request $request) {
     return "Home";
 })->name("home");
 
 Route::post('/auth/login', [AuthController::class, 'loginUser']);
+Route::post('/auth/signup', [AuthController::class, 'createUser']);
