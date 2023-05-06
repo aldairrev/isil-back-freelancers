@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\DocumentType;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -9,6 +10,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\Enum;
 
 class AuthController extends Controller
 {
@@ -73,6 +75,7 @@ class AuthController extends Controller
                 'name' => 'required',
                 'lastname' => 'required|string',
                 'email' => 'required|email|unique:users,email',
+                'document_type' => [new Enum(DocumentType::class)],
                 'document_code' => 'required|string',
                 'password' => 'required'
             ]);
@@ -89,6 +92,7 @@ class AuthController extends Controller
                 'name' => $request->name,
                 'lastname' => $request->lastname,
                 'email' => $request->email,
+                'document_type' => $request->document_type,
                 'document_code' => $request->document_code,
                 'password' => Hash::make($request->password)
             ]);
